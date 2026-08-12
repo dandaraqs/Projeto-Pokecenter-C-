@@ -12,3 +12,4 @@ C:\Users\Usuario\Desktop\Projetos pessoais\projeto-pokecenter\projetoPokecenter\
 C:\Users\Usuario\Desktop\Projetos pessoais\projeto-pokecenter\projetoPokecenter\obj\Debug\net10.0\projetoPokecenter.pdb
 C:\Users\Usuario\Desktop\Projetos pessoais\projeto-pokecenter\projetoPokecenter\obj\Debug\net10.0\projetoPokecenter.genruntimeconfig.cache
 C:\Users\Usuario\Desktop\Projetos pessoais\projeto-pokecenter\projetoPokecenter\obj\Debug\net10.0\ref\projetoPokecenter.dll
+C:\Users\Usuario\Desktop\Projetos pessoais\projeto-pokecenter\projetoPokecenter\obj\Debug\net10.0\projetoPokecenter.sourcelink.json

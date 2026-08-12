@@ -53,7 +53,7 @@ public class Produto
         }
     }
 
-    public void BuscarInformacoes()
+    public virtual void BuscarInformacoes()
     {
         Console.WriteLine("");
         Console.Write("Produto: ");
@@ -82,8 +82,22 @@ public class ItemCura: Produto {
         EfeitosAdicionais = efeitosadicionais;
     }
 
-    public void BuscarInformacoesEspecificas()
+    public override void BuscarInformacoes()
     {
+        Console.WriteLine("");
+        Console.Write("Produto: ");
+        Console.WriteLine(Nome);
+        Console.Write("Preço: ");
+        Console.WriteLine(Preco);
+        Console.Write("Quantidade: ");
+        Console.WriteLine(QuantidadeEstoque);
+        Console.Write("Importado: ");
+        string importadoRev = CondicaoImportacao ? "Sim" : "Não";
+        Console.WriteLine(importadoRev);
+        Console.Write("Categoria: ");
+        Console.WriteLine(Categoria);
+        Console.Write("Código: ");
+        Console.WriteLine(CodProduto);
         Console.Write("Pontos de Cura:");
         Console.WriteLine($"{PontosDeCura}");
         Console.Write("Efeitos adicionais:");
@@ -97,13 +111,27 @@ public class Pokeball: Produto {
     public string EfeitosAdicionais {get; private set;}
 
 
-    public  Pokeball (string nome, decimal preco, int quantidadeEstoque, bool condicaoImportcao, string categoria, string codProduto, int taxaCaptura, string efeitosadicionais) : base(nome, preco, quantidadeEstoque, condicaoImportcao, categoria, codProduto )  {
+    public Pokeball (string nome, decimal preco, int quantidadeEstoque, bool condicaoImportcao, string categoria, string codProduto, int taxaCaptura, string efeitosadicionais) : base(nome, preco, quantidadeEstoque, condicaoImportcao, categoria, codProduto )  {
         TaxaCaptura = taxaCaptura;
         EfeitosAdicionais = efeitosadicionais;
     }
 
-    public void BuscarInformacoesEspecificas()
+    public override void BuscarInformacoes()
     {
+        Console.WriteLine("");
+        Console.Write("Produto: ");
+        Console.WriteLine(Nome);
+        Console.Write("Preço: ");
+        Console.WriteLine(Preco);
+        Console.Write("Quantidade: ");
+        Console.WriteLine(QuantidadeEstoque);
+        Console.Write("Importado: ");
+        string importadoRev = CondicaoImportacao ? "Sim" : "Não";
+        Console.WriteLine(importadoRev);
+        Console.Write("Categoria: ");
+        Console.WriteLine(Categoria);
+        Console.Write("Código: ");
+        Console.WriteLine(CodProduto);
         Console.Write("Taxa de Captura:");
         Console.WriteLine($"{TaxaCaptura}");
         Console.Write("Efeitos adicionais:");
@@ -365,17 +393,14 @@ void MostrarInformacoesProduto()
     switch (respostaProduto){
     case "Revive":
         revive.BuscarInformacoes();
-        revive.BuscarInformacoesEspecificas();
         break;
 
     case "Potion":
         potion.BuscarInformacoes();
-        potion.BuscarInformacoesEspecificas();
         break;
 
     case "Pokeball":
         pokeball.BuscarInformacoes();
-        pokeball.BuscarInformacoesEspecificas();
         break;
 
     default:
