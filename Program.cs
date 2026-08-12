@@ -44,7 +44,7 @@ public class Produto
 
     public bool ValidarVenda(int quantidadeComprada, int quantidadeEstoque)
     {
-        if (quantidadeComprada <= quantidadeEstoque)
+        if (quantidadeComprada <= quantidadeEstoque && quantidadeComprada > 0)
         {
             return true;
         } else
@@ -225,44 +225,15 @@ do {
 void ReporProduto()
     {
     MostrarProdutos();
-    string respostaProduto = SelecionarProduto();
+    Produto produtoEscolhido = SelecionarProduto();
 
-    switch (respostaProduto)
-    {
-        case "Revive":
-            revive.ReporEstoque();
+            produtoEscolhido.ReporEstoque();
             Console.WriteLine("Estamos repondo o estoque! Só um momento!");
             Thread.Sleep(3000);
             Console.Clear();
-            Console.WriteLine($"Estoque reposto com sucesso! O novo estoque de {revive.Nome} é {revive.QuantidadeEstoque}");
+            Console.WriteLine($"Estoque reposto com sucesso! O novo estoque de {produtoEscolhido.Nome} é {produtoEscolhido.QuantidadeEstoque}");
             Thread.Sleep(3000);
             Console.Clear();
-            break;
-
-        case "Potion":
-            potion.ReporEstoque();
-            Console.WriteLine("Estamos repondo o estoque! Só um momento!");
-            Thread.Sleep(3000);
-            Console.Clear();
-            Console.WriteLine($"Estoque reposto com sucesso! O novo estoque de {potion.Nome} é {potion.QuantidadeEstoque}");
-            Thread.Sleep(3000);
-            Console.Clear();
-            break;
-
-        case "Pokeball":
-            pokeball.ReporEstoque();
-            Console.WriteLine("Estamos repondo o estoque! Só um momento!");
-            Thread.Sleep(3000);
-            Console.Clear();
-            Console.WriteLine($"Estoque reposto com sucesso! O novo estoque de {pokeball.Nome} é {pokeball.QuantidadeEstoque}");
-            Thread.Sleep(3000);
-            Console.Clear();
-            break;
-
-        default:
-            Console.WriteLine("Produto não encontrado");
-            break;
-}
     }
 
 
@@ -272,49 +243,19 @@ int ContarEstoque(Produto produto)
     }
 
 
-
 void MostrarEstoque()
 {   
     MostrarProdutos();
-    string respostaProduto = SelecionarProduto();
-    switch (respostaProduto){
-        case "Revive":
-            Console.WriteLine($"Temos {revive.QuantidadeEstoque} disponíveis");
-            if ( ContarEstoque(revive) <= 5 && ContarEstoque(revive) > 0)
+    Produto produtoEscolhido = SelecionarProduto();
+
+            Console.WriteLine($"Temos {produtoEscolhido.QuantidadeEstoque} disponíveis");
+            if ( ContarEstoque(produtoEscolhido) <= 5 && ContarEstoque(produtoEscolhido) > 0)
             {
                 Console.WriteLine($"Últimas oportunidades! Não perca!");
             } else if (ContarEstoque(revive) == 0)
             {
                 Console.WriteLine($"Esse produto está esgotado. Pediremos mais em breve!");
             }
-            break;
-        
-        case "Potion":
-            Console.WriteLine($"Temos {potion.QuantidadeEstoque} disponíveis");
-            if ( ContarEstoque(potion) <= 5 && ContarEstoque(potion) > 0)
-            {
-                Console.WriteLine($"Últimas oportunidades! Não perca!");
-            } else if (ContarEstoque(potion) == 0)
-            {
-                Console.WriteLine($"Esse produto está esgotado. Pediremos mais em breve!");
-            }
-            break;
-
-        case "Pokeball":
-            Console.WriteLine($"Temos {pokeball.QuantidadeEstoque} disponíveis");
-            if ( ContarEstoque(pokeball) <= 5 && ContarEstoque(pokeball) > 0)
-            {
-                Console.WriteLine($"Últimas oportunidades! Não perca!");
-            } else if (ContarEstoque(pokeball) == 0)
-            {
-                Console.WriteLine($"Esse produto está esgotado. Pediremos mais em breve!");
-            }
-            break;
-
-        default:
-            Console.WriteLine("Escolha uma opção válida");
-            break;
-    }
 }
 
 
@@ -327,29 +268,30 @@ void MostrarProdutos()
 }
 
 
-string SelecionarProduto()
+Produto SelecionarProduto()
 {   
     Console.Write("Qual produto você deseja?");
-    string resposta = Console.ReadLine()!;
+    string resposta = Console.ReadLine();
     string mensagemFalha = "Escolha uma opção válida";
-    Produto produto;
+    Produto produto = null;
     if (resposta == "1")
         {
             produto = revive;
-            return produto.Nome;
         }
     else if (resposta == "2")
         {
             produto = potion;
-            return produto.Nome;
         }
     else if (resposta == "3")
         {
             produto = pokeball;
-            return produto.Nome;
+        } 
+
+    else
+        {
+            Console.WriteLine("Digite uma opção válida.");
         }
-    
-        return mensagemFalha;
+    return produto;
 }
 
 
@@ -363,24 +305,9 @@ public int IntermediarVenda()
 void RealizarVenda()
 {
     MostrarProdutos();
-    string respostaProduto = SelecionarProduto();
+    Produto produtoEscolhido = SelecionarProduto();
+    produtoEscolhido.Vender(IntermediarVenda());
 
-    switch (respostaProduto)
-    {
-        case "Revive":
-            revive.Vender(IntermediarVenda());
-            break;
-
-            case "Potion":
-
-            potion.Vender(IntermediarVenda());
-            break;
-
-            case "Pokeball":
-
-            pokeball.Vender(IntermediarVenda());
-            break;
-    }
 
 }
 
@@ -388,28 +315,11 @@ void RealizarVenda()
 void MostrarInformacoesProduto()
 {
     MostrarProdutos();
-    string respostaProduto = SelecionarProduto();
-
-    switch (respostaProduto){
-    case "Revive":
-        revive.BuscarInformacoes();
-        break;
-
-    case "Potion":
-        potion.BuscarInformacoes();
-        break;
-
-    case "Pokeball":
-        pokeball.BuscarInformacoes();
-        break;
-
-    default:
-        Console.WriteLine("Escolha uma opção válida");
-        break;
-
+    Produto produtoEscolhido = SelecionarProduto();
+    produtoEscolhido.BuscarInformacoes();
 }
-}
-    static void Main (string[] args)
+
+static void Main (string[] args)
     {
         Program programa = new Program();
         programa.ExibirMenu();
