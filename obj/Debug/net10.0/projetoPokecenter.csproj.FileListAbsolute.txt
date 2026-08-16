@@ -13,3 +13,18 @@ C:\Users\Usuario\Desktop\Projetos pessoais\projeto-pokecenter\projetoPokecenter\
 C:\Users\Usuario\Desktop\Projetos pessoais\projeto-pokecenter\projetoPokecenter\obj\Debug\net10.0\projetoPokecenter.genruntimeconfig.cache
 C:\Users\Usuario\Desktop\Projetos pessoais\projeto-pokecenter\projetoPokecenter\obj\Debug\net10.0\ref\projetoPokecenter.dll
 C:\Users\Usuario\Desktop\Projetos pessoais\projeto-pokecenter\projetoPokecenter\obj\Debug\net10.0\projetoPokecenter.sourcelink.json
+C:\Users\Usuario\Desktop\projetos-pessoais\projeto-pokecenter\projetoPokecenter\bin\Debug\net10.0\projetoPokecenter.exe
+C:\Users\Usuario\Desktop\projetos-pessoais\projeto-pokecenter\projetoPokecenter\bin\Debug\net10.0\projetoPokecenter.deps.json
+C:\Users\Usuario\Desktop\projetos-pessoais\projeto-pokecenter\projetoPokecenter\bin\Debug\net10.0\projetoPokecenter.runtimeconfig.json
+C:\Users\Usuario\Desktop\projetos-pessoais\projeto-pokecenter\projetoPokecenter\bin\Debug\net10.0\projetoPokecenter.dll
+C:\Users\Usuario\Desktop\projetos-pessoais\projeto-pokecenter\projetoPokecenter\bin\Debug\net10.0\projetoPokecenter.pdb
+C:\Users\Usuario\Desktop\projetos-pessoais\projeto-pokecenter\projetoPokecenter\obj\Debug\net10.0\projetoPokecenter.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Usuario\Desktop\projetos-pessoais\projeto-pokecenter\projetoPokecenter\obj\Debug\net10.0\projetoPokecenter.AssemblyInfoInputs.cache
+C:\Users\Usuario\Desktop\projetos-pessoais\projeto-pokecenter\projetoPokecenter\obj\Debug\net10.0\projetoPokecenter.AssemblyInfo.cs
+C:\Users\Usuario\Desktop\projetos-pessoais\projeto-pokecenter\projetoPokecenter\obj\Debug\net10.0\projetoPokecenter.csproj.CoreCompileInputs.cache
+C:\Users\Usuario\Desktop\projetos-pessoais\projeto-pokecenter\projetoPokecenter\obj\Debug\net10.0\projetoPokecenter.sourcelink.json
+C:\Users\Usuario\Desktop\projetos-pessoais\projeto-pokecenter\projetoPokecenter\obj\Debug\net10.0\projetoPokecenter.dll
+C:\Users\Usuario\Desktop\projetos-pessoais\projeto-pokecenter\projetoPokecenter\obj\Debug\net10.0\refint\projetoPokecenter.dll
+C:\Users\Usuario\Desktop\projetos-pessoais\projeto-pokecenter\projetoPokecenter\obj\Debug\net10.0\projetoPokecenter.pdb
+C:\Users\Usuario\Desktop\projetos-pessoais\projeto-pokecenter\projetoPokecenter\obj\Debug\net10.0\projetoPokecenter.genruntimeconfig.cache
+C:\Users\Usuario\Desktop\projetos-pessoais\projeto-pokecenter\projetoPokecenter\obj\Debug\net10.0\ref\projetoPokecenter.dll

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\Projetos pessoais\\projeto-pokecenter\\projetoPokecenter\\projetoPokecenter.csproj",
+      "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\projetos-pessoais\\projeto-pokecenter\\projetoPokecenter\\projetoPokecenter.csproj",
       "projectName": "projetoPokecenter",
-      "projectPath": "C:\\Users\\Usuario\\Desktop\\Projetos pessoais\\projeto-pokecenter\\projetoPokecenter\\projetoPokecenter.csproj",
+      "projectPath": "C:\\Users\\Usuario\\Desktop\\projetos-pessoais\\projeto-pokecenter\\projetoPokecenter\\projetoPokecenter.csproj",
       "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Usuario\\Desktop\\Projetos pessoais\\projeto-pokecenter\\projetoPokecenter\\obj\\",
+      "outputPath": "C:\\Users\\Usuario\\Desktop\\projetos-pessoais\\projeto-pokecenter\\projetoPokecenter\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -1,6 +1,28 @@
 ﻿using System.Diagnostics.Contracts;
 
-public class Produto
+public interface IVendavel
+{
+    void Vender(int quantidade);
+}
+
+public interface IReponivel
+{
+    void ReporEstoque();
+}
+
+public interface IContavel
+{
+    void ContarEstoque();
+}
+
+public interface IBuscavel
+{
+    void BuscarInformacoes();
+}
+
+
+
+public class Produto:IVendavel, IReponivel, IContavel, IBuscavel
 {
     public Produto() {}
     public string Nome {get; set;}
@@ -20,12 +42,9 @@ public class Produto
         CodProduto = codProduto;
     }
 
-         
-
-
 
     public void Vender (int quantidadeComprada)
-{   if(ValidarVenda(quantidadeComprada, QuantidadeEstoque)){
+    {   if(ValidarVenda(quantidadeComprada, QuantidadeEstoque)){
         QuantidadeEstoque = QuantidadeEstoque - quantidadeComprada;
         decimal precoTotal = quantidadeComprada * Preco;
         Console.WriteLine($"Você comprou {quantidadeComprada} por {precoTotal}");
@@ -33,13 +52,18 @@ public class Produto
     {
         Console.WriteLine("Não foi possível realizar a venda. O saldo em estoque não é suficiente ou a quantidade é inválida");
     }
-}
+    }
 
     public void ReporEstoque ()
     {   
         Console.Write("Quantas unidades você deseja repor?");
         int quantidadeAdicionada = int.Parse(Console.ReadLine()!);
         QuantidadeEstoque = QuantidadeEstoque + quantidadeAdicionada;
+        Console.WriteLine("Estamos repondo o estoque! Só um momento!");
+        Thread.Sleep(3000);
+        Console.Clear();
+        Console.WriteLine($"Estoque reposto com sucesso! O novo estoque de {Nome} é {QuantidadeEstoque}");
+        Thread.Sleep(3000);
     }
 
     public bool ValidarVenda(int quantidadeComprada, int quantidadeEstoque)
@@ -50,6 +74,19 @@ public class Produto
         } else
         {
             return false;
+        }
+    }
+
+
+    public void ContarEstoque()
+    {
+        Console.WriteLine($"Temos {QuantidadeEstoque} disponíveis");
+        if ( QuantidadeEstoque <= 5 && QuantidadeEstoque > 0)
+        {
+            Console.WriteLine($"Últimas oportunidades! Não perca!");
+        } else if (QuantidadeEstoque == 0)
+        {
+            Console.WriteLine($"Esse produto está esgotado. Pediremos mais em breve!");
         }
     }
 
@@ -71,7 +108,10 @@ public class Produto
         Console.WriteLine(CodProduto);
     }
 
+
 }
+
+
 
 
 public class ItemCura: Produto {
@@ -178,7 +218,7 @@ do {
     case "1":
         Console.Clear();
         ExibirCabecalho();
-        RealizarVenda();
+        RealizarVenda(SelecionarProduto());
         Thread.Sleep(3000);
         Console.Clear();
         break;
@@ -186,7 +226,7 @@ do {
     case "2":
         Console.Clear();
         ExibirCabecalho();
-        MostrarInformacoesProduto();
+        MostrarInformacoesProduto(SelecionarProduto());
         Thread.Sleep(3000);
         Console.Clear();
         break;
@@ -194,7 +234,7 @@ do {
     case "3":
         Console.Clear();
         ExibirCabecalho();
-        MostrarEstoque();
+        MostrarEstoque(SelecionarProduto());
         Thread.Sleep(3000);
         Console.Clear();
         break;
@@ -209,7 +249,7 @@ do {
 
     case "4":
         Console.Clear();
-        ReporProduto();
+        ReporProduto(SelecionarProduto());
 
         break;
 
@@ -222,40 +262,20 @@ do {
 }
 
 
-void ReporProduto()
+void ReporProduto(IReponivel item)
     {
-    MostrarProdutos();
-    Produto produtoEscolhido = SelecionarProduto();
-
-            produtoEscolhido.ReporEstoque();
-            Console.WriteLine("Estamos repondo o estoque! Só um momento!");
-            Thread.Sleep(3000);
-            Console.Clear();
-            Console.WriteLine($"Estoque reposto com sucesso! O novo estoque de {produtoEscolhido.Nome} é {produtoEscolhido.QuantidadeEstoque}");
-            Thread.Sleep(3000);
-            Console.Clear();
+    item.ReporEstoque();
+    Console.Clear();
     }
 
 
-int ContarEstoque(Produto produto)
-    {
-        return produto.QuantidadeEstoque;
-    }
 
 
-void MostrarEstoque()
+void MostrarEstoque(IContavel item)
 {   
-    MostrarProdutos();
-    Produto produtoEscolhido = SelecionarProduto();
-
-            Console.WriteLine($"Temos {produtoEscolhido.QuantidadeEstoque} disponíveis");
-            if ( ContarEstoque(produtoEscolhido) <= 5 && ContarEstoque(produtoEscolhido) > 0)
-            {
-                Console.WriteLine($"Últimas oportunidades! Não perca!");
-            } else if (ContarEstoque(revive) == 0)
-            {
-                Console.WriteLine($"Esse produto está esgotado. Pediremos mais em breve!");
-            }
+    item.ContarEstoque();
+    Thread.Sleep(3000);
+    Console.Clear();
 }
 
 
@@ -269,10 +289,9 @@ void MostrarProdutos()
 
 
 Produto SelecionarProduto()
-{   
+{   MostrarProdutos();
     Console.Write("Qual produto você deseja?");
     string resposta = Console.ReadLine();
-    string mensagemFalha = "Escolha uma opção válida";
     Produto produto = null;
     if (resposta == "1")
         {
@@ -302,21 +321,15 @@ public int IntermediarVenda()
         return quantidadeComprada;
     }
 
-void RealizarVenda()
+void RealizarVenda(IVendavel item)
 {
-    MostrarProdutos();
-    Produto produtoEscolhido = SelecionarProduto();
-    produtoEscolhido.Vender(IntermediarVenda());
-
-
+    item.Vender(IntermediarVenda());
 }
 
 
-void MostrarInformacoesProduto()
+void MostrarInformacoesProduto(IBuscavel item)
 {
-    MostrarProdutos();
-    Produto produtoEscolhido = SelecionarProduto();
-    produtoEscolhido.BuscarInformacoes();
+    item.BuscarInformacoes();
 }
 
 static void Main (string[] args)
