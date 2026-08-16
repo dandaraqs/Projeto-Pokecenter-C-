@@ -180,11 +180,11 @@ public class Pokeball: Produto {
 }
 
 class Program {
-//Função para exibir cabeçalho
-
 ItemCura revive = new ItemCura ("Revive", 150,  10,  true,  "Cura", "R", 50, "Reviver");
 ItemCura potion = new ItemCura ("Potion", 50, 15, true, "Cura", "Ptn", 20, "Nenhum");
 Pokeball pokeball = new Pokeball ("Pokeball", 100, 30, false, "Captura", "Pkb", 1, "Nenhum");
+List<Produto> produtos = new List<Produto>();
+
 
 
 void ExibirCabecalho()
@@ -194,7 +194,13 @@ void ExibirCabecalho()
     Console.WriteLine("==============================");
 }
 
-
+void Iniciar()
+    {
+        produtos.Add(revive);
+        produtos.Add(potion);
+        produtos.Add(pokeball);
+        ExibirMenu();
+    }
 
 
 //Função para exibir menu de interação
@@ -280,36 +286,19 @@ void MostrarEstoque(IContavel item)
 
 
 void MostrarProdutos()
-{
+{   int posicao;
+    for (int i = 0;  i < produtos.Count; i++){  
     Console.WriteLine("Os nossos produtos são:");
-    Console.WriteLine("1- Revive");
-    Console.WriteLine("2- Potion");
-    Console.WriteLine("3- Pokeball");
+    Console.WriteLine($"`{i+1} - {produtos[i].Nome}");
+    }
 }
 
 
 Produto SelecionarProduto()
 {   MostrarProdutos();
     Console.Write("Qual produto você deseja?");
-    string resposta = Console.ReadLine();
-    Produto produto = null;
-    if (resposta == "1")
-        {
-            produto = revive;
-        }
-    else if (resposta == "2")
-        {
-            produto = potion;
-        }
-    else if (resposta == "3")
-        {
-            produto = pokeball;
-        } 
-
-    else
-        {
-            Console.WriteLine("Digite uma opção válida.");
-        }
+    int resposta = int.Parse(Console.ReadLine()!);
+    Produto produto = produtos[resposta];
     return produto;
 }
 
@@ -335,8 +324,10 @@ void MostrarInformacoesProduto(IBuscavel item)
 static void Main (string[] args)
     {
         Program programa = new Program();
-        programa.ExibirMenu();
+        programa.Iniciar();
     }
+
+
 }
 
 
