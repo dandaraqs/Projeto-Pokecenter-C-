@@ -77,6 +77,15 @@ public class Produto:IVendavel, IReponivel, IContavel, IBuscavel
         }
     }
 
+    public bool ValidarProcura(string buscado, string caracteristica)
+    {   
+        bool condicao = false;
+        
+        
+
+
+        return condicao;
+    }
 
     public void ContarEstoque()
     {
@@ -143,7 +152,10 @@ public class ItemCura: Produto {
         Console.Write("Efeitos adicionais:");
         Console.WriteLine($"{EfeitosAdicionais}");
     }
-}
+
+
+    }
+
 
 
 public class Pokeball: Produto {
@@ -184,6 +196,7 @@ ItemCura revive = new ItemCura ("Revive", 150,  10,  true,  "Cura", "R", 50, "Re
 ItemCura potion = new ItemCura ("Potion", 50, 15, true, "Cura", "Ptn", 20, "Nenhum");
 Pokeball pokeball = new Pokeball ("Pokeball", 100, 30, false, "Captura", "Pkb", 1, "Nenhum");
 List<Produto> produtos = new List<Produto>();
+Dictionary<string, Produto> produtosPorCodigo = new Dictionary<string, Produto>();
 
 
 
@@ -199,6 +212,9 @@ void Iniciar()
         produtos.Add(revive);
         produtos.Add(potion);
         produtos.Add(pokeball);
+        produtosPorCodigo.Add("R", revive);
+        produtosPorCodigo.Add("Ptn", potion);
+        produtosPorCodigo.Add("Pkb", pokeball);
         ExibirMenu();
     }
 
@@ -214,6 +230,7 @@ do {
     Console.WriteLine("2- Consultar produto");
     Console.WriteLine("3- Ver estoque");
     Console.WriteLine("4- Repor estoque");
+    Console.WriteLine("5- Pesquisar produto");
     Console.WriteLine("0- Sair");
     Console.WriteLine("");
     Console.Write("Selecione uma opção:");
@@ -259,6 +276,11 @@ do {
 
         break;
 
+    case "5":
+        Console.Clear();
+        PesquisarProdutoMenu();
+        break;
+
     default:
         Console.WriteLine("Não há nenhuma informação correspondente. Favor informar uma das opções do menu.");
         break;
@@ -276,7 +298,6 @@ void ReporProduto(IReponivel item)
 
 
 
-
 void MostrarEstoque(IContavel item)
 {   
     item.ContarEstoque();
@@ -285,8 +306,96 @@ void MostrarEstoque(IContavel item)
 }
 
 
+
+void MostrarOpcoesPesquisa(){
+    Console.WriteLine("Como você deseja pesquisar?");
+    Console.WriteLine("1- Por categoria");
+    Console.WriteLine("2- Por preço máximo");
+    Console.WriteLine("3- Com estoque baixo");
+    Console.WriteLine("4- Por nome");
+    Console.WriteLine("5- Do mais barato para o mais caro"); 
+    Console.WriteLine("0- Voltar");
+}
+
+void PesquisarProdutoMenu()
+    {
+        MostrarOpcoesPesquisa();
+        Console.Write("Digite uma opção");
+        string resposta = Console.ReadLine();
+
+        switch (resposta)
+        {
+            case "1":
+                RetornarProdutoCategoria();
+                break;
+
+            case "2":
+                RetornarProdutoValor();
+                break;
+
+            case "3":
+                //RetornarProdutoBaixoEstoque();
+                break;
+
+            case "4":
+                //PesquisarProdutoNome();
+                break;
+
+            case "5":
+                //OrdenarProdutoPreco();
+                break;
+
+            case "0":
+                ExibirMenu();
+                break;
+
+            default:
+                Console.WriteLine("Digite uma opção válida.");
+                break;
+        }
+
+
+    }
+
+    void RetornarProdutoCategoria()
+    {  Console.Write("Digte o nome da categoria que deseja buscar:");
+       string RespostaConsole = Console.ReadLine()!;
+       List<Produto> produtosFiltrados = produtos.Where(produto => produto.Categoria == RespostaConsole).ToList();
+       Console.WriteLine("Encontramos os seguintes produtos nessa categoria");
+        if(produtosFiltrados.Count == 0)
+            {
+                Console.WriteLine("Não encontramos nenhum produto com essa categoria");   
+            }
+        else{
+                foreach (Produto produto in produtosFiltrados)
+                {
+                    Console.WriteLine($"{produto.Nome} - {produto.Preco}");
+                }
+            }   
+    }
+
+
+    void RetornarProdutoValor()
+    {  Console.Write("Digte o valor máximo que deseja buscar:");
+       int RespostaConsole = int.Parse(Console.ReadLine()!);
+       List<Produto> produtosFiltrados = produtos.Where(produto => produto.Preco <= RespostaConsole).ToList();
+       Console.WriteLine("Encontramos os seguintes produtos nessa categoria");
+        if(produtosFiltrados.Count == 0)
+            {
+                Console.WriteLine("Não encontramos nenhum produto abaixo desse valor");   
+            }
+        else{
+                foreach (Produto produto in produtosFiltrados)
+                {
+                    Console.WriteLine($"{produto.Nome} - {produto.Preco}");
+                }
+            }   
+    }
+
+    
+
 void MostrarProdutos()
-{   int posicao;
+{ 
     for (int i = 0;  i < produtos.Count; i++){  
     Console.WriteLine("Os nossos produtos são:");
     Console.WriteLine($"`{i+1} - {produtos[i].Nome}");
@@ -298,7 +407,7 @@ Produto SelecionarProduto()
 {   MostrarProdutos();
     Console.Write("Qual produto você deseja?");
     int resposta = int.Parse(Console.ReadLine()!);
-    Produto produto = produtos[resposta];
+    Produto produto = produtos[resposta-1];
     return produto;
 }
 
