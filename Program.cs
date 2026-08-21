@@ -57,13 +57,23 @@ public class Produto:IVendavel, IReponivel, IContavel, IBuscavel
     public void ReporEstoque ()
     {   
         Console.Write("Quantas unidades você deseja repor?");
-        int quantidadeAdicionada = int.Parse(Console.ReadLine()!);
-        QuantidadeEstoque = QuantidadeEstoque + quantidadeAdicionada;
-        Console.WriteLine("Estamos repondo o estoque! Só um momento!");
-        Thread.Sleep(3000);
-        Console.Clear();
-        Console.WriteLine($"Estoque reposto com sucesso! O novo estoque de {Nome} é {QuantidadeEstoque}");
-        Thread.Sleep(3000);
+        bool quantidadeValida = false;
+        
+        while(!quantidadeValida){
+            try{
+                int quantidadeAdicionada = int.Parse(Console.ReadLine()!);
+                QuantidadeEstoque = QuantidadeEstoque + quantidadeAdicionada;
+                Console.WriteLine("Estamos repondo o estoque! Só um momento!");
+                Thread.Sleep(3000);
+                Console.Clear();
+                Console.WriteLine($"Estoque reposto com sucesso! O novo estoque de {Nome} é {QuantidadeEstoque}");
+                Thread.Sleep(3000);
+                }
+            catch
+            {
+                Console.WriteLine("O valor digitado não é um número válido. Tente novamente");
+            }
+        }
     }
 
     public bool ValidarVenda(int quantidadeComprada, int quantidadeEstoque)
@@ -117,7 +127,7 @@ public class Produto:IVendavel, IReponivel, IContavel, IBuscavel
         Console.WriteLine(CodProduto);
     }
 
-
+    
 }
 
 
@@ -153,7 +163,7 @@ public class ItemCura: Produto {
         Console.WriteLine($"{EfeitosAdicionais}");
     }
 
-
+    
     }
 
 
@@ -321,31 +331,37 @@ void PesquisarProdutoMenu()
     {
         MostrarOpcoesPesquisa();
         Console.Write("Digite uma opção");
-        string resposta = Console.ReadLine();
+        string resposta = Console.ReadLine()!;
 
         switch (resposta)
         {
             case "1":
+                Console.Clear();
                 RetornarProdutoCategoria();
                 break;
 
             case "2":
+                Console.Clear();
                 RetornarProdutoValor();
                 break;
 
             case "3":
-                //RetornarProdutoBaixoEstoque();
+                Console.Clear();
+                RetornarProdutoBaixoEstoque();
                 break;
 
             case "4":
-                //PesquisarProdutoNome();
+                Console.Clear();
+                PesquisarProdutoNome();
                 break;
 
             case "5":
-                //OrdenarProdutoPreco();
+                Console.Clear();
+                OrdenarProdutoPreco();
                 break;
 
             case "0":
+                Console.Clear();
                 ExibirMenu();
                 break;
 
@@ -358,20 +374,14 @@ void PesquisarProdutoMenu()
     }
 
     void RetornarProdutoCategoria()
-    {  Console.Write("Digte o nome da categoria que deseja buscar:");
-       string RespostaConsole = Console.ReadLine()!;
-       List<Produto> produtosFiltrados = produtos.Where(produto => produto.Categoria == RespostaConsole).ToList();
-       Console.WriteLine("Encontramos os seguintes produtos nessa categoria");
-        if(produtosFiltrados.Count == 0)
-            {
-                Console.WriteLine("Não encontramos nenhum produto com essa categoria");   
-            }
-        else{
-                foreach (Produto produto in produtosFiltrados)
-                {
-                    Console.WriteLine($"{produto.Nome} - {produto.Preco}");
-                }
-            }   
+    {   Func<Produto, string> BuscarPorCategoria = (produto) => produto.Categoria;
+        
+        List<Produto> produtoEncontrado = BuscarProduto(produtos, (produto) => produto.Categoria, "a categoria");
+        Console.WriteLine("Encontramos o seguinte produto com essa categoria:");
+        foreach (Produto produto in produtoEncontrado)
+        {
+            Console.WriteLine($"{produto.Nome} - {produto.Preco}");
+        } 
     }
 
 
@@ -392,8 +402,53 @@ void PesquisarProdutoMenu()
             }   
     }
 
+    void RetornarProdutoBaixoEstoque()
+    {
+        List<Produto> produtosFiltrados = produtos.Where(produto => produto.QuantidadeEstoque <= 5).ToList();
+        if(produtosFiltrados.Count == 0)
+            {
+                Console.WriteLine("Todos os estoques estão abastecidos");   
+            }
+        else{
+                foreach (Produto produto in produtosFiltrados)
+                {
+                    Console.WriteLine($"{produto.Nome} - {produto.QuantidadeEstoque} unidades disponíveis");
+                }
+            }   
+    }
+    
+     
+
+    void PesquisarProdutoNome() {
+        Func<Produto, string> BuscarPorNome = (produto) => produto.Nome;
+        
+        List<Produto> produtoEncontrado = BuscarProduto(produtos, (produto) => produto.Nome, "o nome");
+        Console.WriteLine("Encontramos o seguinte produto com esse nome");
+        foreach (Produto produto in produtoEncontrado)
+        {
+            Console.WriteLine($"{produto.Nome} - {produto.Preco}");
+        }
+    }
+
     
 
+    public List<Produto> BuscarProduto(List<Produto> produtos, Func<Produto, string> seletor, string nomeatributo) {
+            Console.Write($"Digite {nomeatributo} do produto que você deseja:");
+            string resposta = Console.ReadLine()!;
+            List<Produto> produtosEncontrados = produtos.Where(produto => resposta.ToUpper() == seletor(produto).ToUpper()).ToList();
+            return produtosEncontrados;
+            }
+
+
+
+void OrdenarProdutoPreco()
+    {
+        List<Produto> produtosOrdenados = produtos.OrderBy(produto => produto.Preco).ToList();
+        foreach (Produto produto in produtosOrdenados)
+        {
+            Console.WriteLine($"{produto.Nome} - {produto.Preco}");
+        }
+    }
 void MostrarProdutos()
 { 
     for (int i = 0;  i < produtos.Count; i++){  
@@ -403,19 +458,50 @@ void MostrarProdutos()
 }
 
 
+
+
 Produto SelecionarProduto()
 {   MostrarProdutos();
     Console.Write("Qual produto você deseja?");
-    int resposta = int.Parse(Console.ReadLine()!);
-    Produto produto = produtos[resposta-1];
-    return produto;
+    bool selecaoValida = false;
+    Produto produto = null;
+    while(!selecaoValida){
+    try{
+        int resposta = int.Parse(Console.ReadLine()!);
+        produto = produtos[resposta-1];
+        return produto;
+    }
+    catch(FormatException)
+    {
+        Console.WriteLine("O valor digitado não é um número");
+    }
+    catch(ArgumentOutOfRangeException){
+        Console.WriteLine("O produto selecionado não existe em nosso sistema");
+    }
+    }
+    
+    return produto; 
 }
 
 
 public int IntermediarVenda()
     {
         Console.Write("Quantas unidades você deseja comprar?");
-        int quantidadeComprada = int.Parse(Console.ReadLine()!);
+        int quantidadeComprada = 0;
+        bool vendaValida = false;
+
+        while(!vendaValida){
+        try{
+            quantidadeComprada = int.Parse(Console.ReadLine()!);
+            return quantidadeComprada;
+        }
+        catch
+        {
+            Console.WriteLine("O valor digitado não era um número. Tente novamente.");
+
+        }
+        }
+
         return quantidadeComprada;
     }
 
@@ -435,7 +521,6 @@ static void Main (string[] args)
         Program programa = new Program();
         programa.Iniciar();
     }
-
 
 }
 
